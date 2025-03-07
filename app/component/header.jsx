@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { BiListUl } from "react-icons/bi";
 import { RxExit } from "react-icons/rx";
 
-
 export default function Header() {
   const pathName = usePathname();
   const [activeTab, setActiveTab] = useState(0);
@@ -17,6 +16,7 @@ export default function Header() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
   useEffect(() => {
     const activeIndex = navbar.findIndex((item) =>
       pathName.startsWith(item.url)
@@ -25,7 +25,7 @@ export default function Header() {
   }, [pathName]);
   return (
     <>
-      <div className="flex flex-col  justify-around items-center p-6 pr-0 w-full bg-linear-to-r from-gray-900 to-red-800 @3xl:flex-row">
+      <div className="flex flex-col  justify-around items-center p-6 pr-0 w-full bg-linear-to-r from-gray-900 to-red-800 @3xl:flex-row relative z-40">
         <motion.div
           initial={{ y: -100 }}
           animate={{ y: 0 }}
@@ -90,47 +90,52 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-
-            <div className=" text-center p-3 bg-linear-to-r from-gray-900 to-red-800 w-full h-60 md:hidden ">
-              <div className="flex flex-col  ">
-                {navbar.map((item, index) => {
-                  const isActive =
-                    pathName.startsWith(item.url) || activeTab === item.name;
-                  return (
-                    <motion.div
+        <>
+          <div
+            className="fixed inset-0 bg-black opacity-80 z-0 md:hidden"
+            onClick={toggleMenu}
+          >
+          </div>
+          <div className=" text-center p-3 bg-linear-to-r from-gray-900 to-red-800 w-full h-60 md:hidden  z-30 absolute ">
+            <div className="flex flex-col  ">
+              {navbar.map((item, index) => {
+                const isActive =
+                  pathName.startsWith(item.url) || activeTab === item.name;
+                return (
+                  <motion.div
+                    key={item.name}
+                    className="relative inline-block px-6 py-3 @lg:px-2"
+                    onClick={() => setActiveTab(index)}
+                  >
+                    <Link
                       key={item.name}
-                      className="relative inline-block px-6 py-3 @lg:px-2"
-                      onClick={() => setActiveTab(index)}
+                      href={item.url}
+                      className={`relative ${
+                        isActive ? "text-blue-500 font-bold " : "text-white"
+                      } px-2 hover:text-blue-500 bottom-0 z-1 hover:scale-105`}
                     >
-                      <Link
-                        key={item.name}
-                        href={item.url}
-                        className={`relative ${
-                          isActive ? "text-blue-500 font-bold " : "text-white"
-                        } px-2 hover:text-blue-500 bottom-0 z-1 hover:scale-105`}
-                      >
-                        {item.name}
-                      </Link>
-                      {isActive && (
-                        <motion.div
-                          className="absolute inset-0 bg-black border border-slate-500  rounded-3xl opacity-70 "
-                          initial={{ scaleX: 0 }}
-                          animate={{ scaleX: 1 }}
-                          exit={{ scaleX: 0 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 25,
-                            duration: 0.6,
-                          }}
-                        />
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
+                      {item.name}
+                    </Link>
+                    {isActive && (
+                      <motion.div
+                        className="absolute inset-0 bg-black border border-slate-500  rounded-3xl opacity-70 "
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        exit={{ scaleX: 0 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 25,
+                          duration: 0.6,
+                        }}
+                      />
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
-
+          </div>
+        </>
       )}
     </>
   );
