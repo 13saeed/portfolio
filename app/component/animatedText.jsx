@@ -12,7 +12,7 @@ export const NeonText = ({ text }) => {
         repeatType: "reverse",
         ease: "easeInOut",
       }}
-      className="text-5xl font-bold mb-10"
+      className="text-5xl font-bold mb-5 "
     >{text}</motion.h1>
   );
 };

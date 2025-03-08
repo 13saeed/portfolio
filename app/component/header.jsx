@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { navbar } from "../(home)/page";
 import { usePathname } from "next/navigation";
@@ -16,6 +16,10 @@ export default function Header() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+  const menuClick = (index) =>{
+    setActiveTab(index)
+    setMenuOpen(false)
+  }
 
   useEffect(() => {
     const activeIndex = navbar.findIndex((item) =>
@@ -25,7 +29,7 @@ export default function Header() {
   }, [pathName]);
   return (
     <>
-      <div className="flex flex-col  justify-around items-center p-6 pr-0 w-full bg-linear-to-r from-gray-900 to-red-800 @3xl:flex-row relative z-40">
+      <div className="flex flex-col  justify-around items-center p-6 pr-0 w-full bg-linear-to-r from-gray-900 to-red-800 @3xl:flex-row relative z-40  @md:justify-between  @md:flex-row @lg:p-8 @2xl:items-center @3xl:px-6 @5xl:py-5 @5xl:items-center">
         <motion.div
           initial={{ y: -100 }}
           animate={{ y: 0 }}
@@ -33,15 +37,15 @@ export default function Header() {
         >
           <Link
             href={"./"}
-            className=" text-lg font-bold items-baseline @3xs:text-xl @2xs:text-2xl @xs:text-3xl @sm:text-4xl @xl:text-5xl @2xl:text-6xl @3xl:text-3xl @4xl:text-4xl "
+            className=" text-lg font-bold  @3xs:text-xl @2xs:text-2xl @xs:text-3xl @sm:text-4xl @md:text-2xl  @xl:text-2xl @2xl:text-xl  @3xl:text-2xl @4xl:text-3xl "
           >
             SAEED CHOUPANI
           </Link>
         </motion.div>
 
-        <div className="flex items-center text-3xl text-center mt-5  rounded-2xl p-2 bg-black @lg:hidden">
+        <div className="flex items-center justify-center text-3xl text-center mt-5  rounded-2xl w-10 h-10 bg-black @2xl:hidden @md:mt-0 @md:mr-3 ">
           <button onClick={toggleMenu} className="cursor-pointer">
-            {menuOpen ? <RxExit /> : <BiListUl />}
+            {menuOpen ? <RxExit size={25} /> : <BiListUl size={30} />}
           </button>
         </div>
 
@@ -49,7 +53,7 @@ export default function Header() {
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.75 }}
-          className="hidden mt-3   relative text-sm text-center @xs:text-lg @sm:mt-5 @sm:text-xl @md:text-2xl @lg:flex-row @lg:text-lg @xl:text-xl @2xl:text-2xl @2xl:mt-8 @3xl:text-xl @3xl:mt-0 @4xl:text-2xl @lg:flex "
+          className="hidden mt-3   relative text-sm text-center @xs:text-lg @sm:mt-5 @sm:text-xl @md:text-2xl @lg:flex-row @lg:text-lg @xl:text-lg @2xl:text-sm  @2xl:mt-0 @3xl:text-lg @3xl:mt-0 @4xl:text-xl @2xl:flex @2xl:items-start"
         >
           {navbar.map((item, index) => {
             const isActive =
@@ -89,14 +93,24 @@ export default function Header() {
         </motion.div>
       </div>
 
-      {menuOpen && (
+<AnimatePresence>
+{menuOpen && (
         <>
-          <div
-            className="fixed inset-0 bg-black opacity-80 z-0 md:hidden"
+          <motion.div
+            className="fixed  inset-0 bg-black opacity-50 z-10 md:hidden overflow-hidden"
             onClick={toggleMenu}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          ></motion.div>
+          <motion.div
+            className=" text-center p-3 bg-linear-to-r from-gray-900 to-red-800 w-full h-60 md:hidden  z-20 absolute overflow-hidden"
+            initial={{ y: -200 }}
+            animate={{ y: 0 }}
+            exit={{ y: -200 }}
+            transition={{ duration: 1 }}
           >
-          </div>
-          <div className=" text-center p-3 bg-linear-to-r from-gray-900 to-red-800 w-full h-60 md:hidden  z-30 absolute ">
             <div className="flex flex-col  ">
               {navbar.map((item, index) => {
                 const isActive =
@@ -105,7 +119,7 @@ export default function Header() {
                   <motion.div
                     key={item.name}
                     className="relative inline-block px-6 py-3 @lg:px-2"
-                    onClick={() => setActiveTab(index)}
+                    onClick={() => menuClick(index)}
                   >
                     <Link
                       key={item.name}
@@ -134,9 +148,12 @@ export default function Header() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </>
       )}
+
+</AnimatePresence>
+
     </>
   );
 }

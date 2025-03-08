@@ -1,7 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/styles/globals.css";
-import { animate } from "motion";
-import { BiListUl } from "react-icons/bi";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +17,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
+
   return (
     <html lang="en">
       <head>

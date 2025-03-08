@@ -48,7 +48,7 @@ export default function Homepage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 3 }}
-              className="flex flex-row items-center text-white text-sm  bg-gray-500 opacity-10  py-2 px-1 rounded-3xl @xs:flex-col @sm:flex-row @lg:text-lg @xl:text-xl @3xl:text-2xl @4xl:text-3xl"
+              className="flex flex-col items-center text-white text-sm  bg-gray-500 opacity-10  py-2 px-1 rounded-3xl @xs:flex-col @sm:flex-row @lg:text-lg @xl:text-xl @3xl:text-2xl @4xl:text-3xl"
             >
               {navbar.map((item, i) => (
                 <motion.li key={i}>
