@@ -1,8 +1,10 @@
+"use client"
 import * as motion from "motion/react-client";
-
+import { useTheme } from "@/app/component/changeTheme";
 export default function About() {
+  const {theme} = useTheme()
   return (
-    <div className="flex flex-col items-center h-screen w-full @2xl:flex-row @2xl:justify-around">
+    <div className={`flex flex-col items-center h-screen w-full @2xl:flex-row @2xl:justify-around ${theme === 'dark' ? "" : "bg-white text-black"}`}>
       <div className=" ">
         <motion.h1
           initial={{ x: -600 }}
@@ -17,7 +19,7 @@ export default function About() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
-        className="flex flex-col items-baseline border-zinc-800 border rounded-2xl w-[330] h-[350] p-8 mt-5 @md:w-[400] @md:h-[400] @xl:w-[500] @xl:h-[500] @2xl:w-[400] @2xl:h-[400] @3xl:w-[450] @3xl:h-[450] @4xl:w-[500] @4xl:h-[500]"
+        className={`flex flex-col items-baseline border rounded-2xl w-[330] h-[350] p-8 mt-5 @md:w-[400] @md:h-[400] @xl:w-[500] @xl:h-[500] @2xl:w-[400] @2xl:h-[400] @3xl:w-[450] @3xl:h-[450] @4xl:w-[500] @4xl:h-[500] ${theme === 'dark' ? "border-zinc-800" : "bg-[#f1f1f1] border-[#f1f1f1] text-black"}`}
       >
         <div className="flex text-xl items-baseline mx-2 my-4 @md:text-2xl @xl:text-3xl @2xl:text-2xl  @4xl:text-3xl">
           <h1 className="font-bold pr-2 ">Full Name:</h1>

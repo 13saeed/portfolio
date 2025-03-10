@@ -1,14 +1,14 @@
+"use client"
 import * as motion from "motion/react-client";
 import Card from "./card";
-
-import { navbar } from "@/app/(home)/page";
-
+import { useTheme } from "@/app/component/changeTheme";
 
 
 export default function Gallery() {
+  const {theme} = useTheme()
   return (
     <>
-      <div className="flex flex-col max-w-screen  items-center ">
+      <div className={`flex flex-col max-w-screen  items-center ${theme == 'dark' ? 'bg-black' : "bg-white text-black" }`}>
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
